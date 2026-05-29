@@ -107,6 +107,6 @@ def recommend_path(request: RecommendationRequest):
         
     return {
         "target_role": role_data['Job Title'],
-        "similarity_score": round(similarity_score * 100, 2), # Dikali 100 untuk format persentase
+        "similarity_score": round(similarity_score * 100, 2),
         "missing_skills": recommendations
     }
