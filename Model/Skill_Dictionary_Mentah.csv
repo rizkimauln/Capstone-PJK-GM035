@@ -1,0 +1,142 @@
+No,Skills,Frekuensi
+1,python,9
+2,cloud computing,7
+3,sql,7
+4,uiux design,7
+5,cicd,5
+6,javascript,5
+7,machine learning,4
+8,aws,4
+9,azure,4
+10,security,4
+11,networking,4
+12,java,4
+13,nodejs,4
+14,data science,3
+15,data visualization,3
+16,linux,3
+17,jenkins,3
+18,git,3
+19,automation,3
+20,algorithms,3
+21,mobile development,3
+22,html,3
+23,css,3
+24,react,3
+25,angular,3
+26,c,3
+27,prototyping,3
+28,deep learning,2
+29,systems design,2
+30,r,2
+31,statistics,2
+32,etl,2
+33,data modeling,2
+34,docker,2
+35,kubernetes,2
+36,terraform,2
+37,scripting,2
+38,data analysis,2
+39,android sdk,2
+40,kotlin,2
+41,rest api,2
+42,google cloud,2
+43,spark,2
+44,hadoop,2
+45,swift,2
+46,objectivec,2
+47,tcpip,2
+48,lanwan,2
+49,routing,2
+50,switching,2
+51,firewalls,2
+52,vpn,2
+53,data structures,2
+54,software development,2
+55,wireframing,2
+56,user research,2
+57,usability testing,2
+58,database management,2
+59,ai architecture,1
+60,scalability,1
+61,model deployment,1
+62,excel,1
+63,power bi,1
+64,data mining,1
+65,data cleansing,1
+66,tableau,1
+67,ansible,1
+68,tensorflow,1
+69,keras,1
+70,pytorch,1
+71,natural language processing,1
+72,computer vision,1
+73,android studio,1
+74,firebase,1
+75,blockchain,1
+76,ethereum,1
+77,smart contracts,1
+78,solidity,1
+79,cryptocurrency,1
+80,distributed ledger,1
+81,consensus algorithms,1
+82,web3,1
+83,cloud architecture,1
+84,cloud security,1
+85,microservices,1
+86,virtualization,1
+87,data warehousing,1
+88,data pipelines,1
+89,data wrangling,1
+90,vuejs,1
+91,typescript,1
+92,sass,1
+93,expressjs,1
+94,mongodb,1
+95,django,1
+96,devops,1
+97,unity,1
+98,game design,1
+99,game engines,1
+100,vr development,1
+101,unreal engine,1
+102,ios sdk,1
+103,xcode,1
+104,ios,1
+105,react native,1
+106,flutter,1
+107,cisco,1
+108,networking protocols,1
+109,automation testing,1
+110,selenium,1
+111,junit,1
+112,testing,1
+113,agile testing,1
+114,performance testing,1
+115,debugging,1
+116,windows server administration,1
+117,adobe creative suite,1
+118,figma,1
+119,user testing,1
+120,interaction design,1
+121,php,1
+122,iot platforms,1
+123,embedded systems,1
+124,sensor technology,1
+125,programming,1
+126,serverside programming,1
+127,api development,1
+128,frameworks,1
+129,statistical modeling,1
+130,security protocols,1
+131,threat analysis,1
+132,risk management,1
+133,incident response,1
+134,network design,1
+135,cloud networking,1
+136,mysql,1
+137,postgresql,1
+138,oracle,1
+139,database design,1
+140,performance tuning,1
+141,backup and recovery,1
