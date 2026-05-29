@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Response
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import RedirectResponse, FileResponse
 from pydantic import BaseModel
 from typing import List, Dict, Any
 import pandas as pd
@@ -41,6 +42,22 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="CareerPath AI API", lifespan=lifespan)
 
+
+@app.get("/", include_in_schema=False)
+def root_redirect():
+    """Redirect root URL to the interactive docs."""
+    return RedirectResponse(url="/docs")
+
+
+@app.get("/favicon.ico", include_in_schema=False)
+def favicon():
+    """Serve a favicon if present, otherwise return 204 No Content."""
+    static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
+    fav_path = os.path.join(static_dir, "favicon.ico")
+    if os.path.exists(fav_path):
+        return FileResponse(fav_path)
+    return Response(status_code=204)
+
 # Konfigurasi CORS agar bisa diakses oleh Frontend (React)
 app.add_middleware(
     CORSMiddleware,
@@ -76,7 +93,8 @@ def recommend_path(request: RecommendationRequest):
     df_jobs = app_data.get("df_jobs")
     skill_links = app_data.get("skill_links")
     
-    if None in (vectorizer, job_vectors, df_jobs, skill_links):
+    # Jangan gunakan 'in' karena DataFrame memiliki truth-value ambiguous
+    if any(x is None for x in (vectorizer, job_vectors, df_jobs, skill_links)):
         raise HTTPException(status_code=500, detail="Models not loaded yet.")
         
     current_skills = [skill.lower().strip() for skill in request.current_skills]
