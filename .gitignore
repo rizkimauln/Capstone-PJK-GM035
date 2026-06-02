@@ -1,0 +1,72 @@
+# =========================
+# GLOBAL OS & EDITOR FILES
+# =========================
+.DS_Store
+.idea/
+.vscode/
+*.log
+*.suo
+*.user
+
+# =========================
+# PYTHON (AI-Service & Model)
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.venv/
+venv/
+ENV/
+
+# =========================
+# NODE.JS (Web-App/Frontend)
+# =========================
+node_modules/
+jspm_packages/
+dist/
+dist-ssr/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =========================
+# PHP / LARAVEL (Web-App/Backend)
+# =========================
+vendor/
+public/hot
+public/storage
+storage/*.key
+.phpunit.cache
+phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+.php_cs.cache
+*.sqlite
+
+# =========================
+# ENVIRONMENT VARIABLES
+# =========================
+.env
+.env.backup
+.env.production
+.env.local

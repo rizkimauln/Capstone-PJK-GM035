@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+.custom-scrollbar::-webkit-scrollbar { width: 6px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); border-radius: 8px; margin: 4px; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background-color: rgba(255, 255, 255, 0.15); border-radius: 8px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background-color: rgba(255, 255, 255, 0.3); }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #050505;
+  color: #e5e7eb;
+  zoom: 0.8; /* Perkecil tampilan 20% dari ukuran asli (diperbesar 5% dari sebelumnya) */
+}
+
+::selection {
+  background-color: #B9FF66;
+  color: black;
+}
