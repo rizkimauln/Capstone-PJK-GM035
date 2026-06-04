@@ -2,8 +2,12 @@ import { useState, useRef } from 'react';
 import { User, Mail, Lock, Trash2, Camera, ArrowLeft, Shield, Save, AlertTriangle } from 'lucide-react';
 
 export default function SettingsPage({ userData, setUserData, token, handleDeleteAccount, goBack, setShowToast }) {
+  const LARAVEL_API = import.meta.env.VITE_LARAVEL_API_URL || "http://127.0.0.1:8001/api";
+  const BACKEND_URL = LARAVEL_API.replace('/api', '');
+
   const [activeTab, setActiveTab] = useState('profile');
-  const [previewPhoto, setPreviewPhoto] = useState(userData.photo || null);
+  const [photoFile, setPhotoFile] = useState(null);
+  const [previewPhoto, setPreviewPhoto] = useState(userData.photo ? (userData.photo.startsWith('blob:') ? userData.photo : `${BACKEND_URL}/storage/${userData.photo}`) : null);
   const fileInputRef = useRef(null);
 
   const [name, setName] = useState(userData.name || '');
@@ -18,20 +22,27 @@ export default function SettingsPage({ userData, setUserData, token, handleDelet
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      setPhotoFile(file);
       const url = URL.createObjectURL(file);
       setPreviewPhoto(url);
     }
   };
 
-  const LARAVEL_API = import.meta.env.VITE_LARAVEL_API_URL || "http://127.0.0.1:8001/api";
-
   const handleSaveProfile = async (e) => {
     e.preventDefault();
+    
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('email', email);
+    if (photoFile) {
+      formData.append('photo', photoFile);
+    }
+
     try {
       const res = await fetch(`${LARAVEL_API}/update-profile`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify({ name, email, photo: previewPhoto })
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: formData
       });
       if (res.ok) {
         const updatedUser = await res.json();

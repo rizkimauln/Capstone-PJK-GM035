@@ -1,5 +1,8 @@
 import { BrainCircuit, ChevronDown, User, LogOut, Settings, History } from 'lucide-react';
 
+const LARAVEL_API = import.meta.env.VITE_LARAVEL_API_URL || "http://127.0.0.1:8001/api";
+const BACKEND_URL = LARAVEL_API.replace('/api', '');
+
 export default function Navbar({ isLoggedIn, userData, levelData, setIsLoggedIn, setAuthMode, isProfileDropdownOpen, setIsProfileDropdownOpen, setCompletedSkills, setCurrentPage }) {
   return (
     <nav className="fixed w-full top-0 z-50 bg-[#050505]/70 backdrop-blur-xl border-b border-white/5">
@@ -21,8 +24,12 @@ export default function Navbar({ isLoggedIn, userData, levelData, setIsLoggedIn,
                   className="flex items-center gap-4 bg-white/5 border border-white/10 rounded-full pl-2 pr-4 py-1.5 hover:bg-white/10 transition-colors text-left"
                 >
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-full bg-[#B9FF66]/20 flex items-center justify-center text-[#B9FF66] border border-[#B9FF66]/30 shrink-0">
-                      <User size={16} />
+                    <div className="w-8 h-8 rounded-full bg-[#B9FF66]/20 flex items-center justify-center text-[#B9FF66] border border-[#B9FF66]/30 shrink-0 overflow-hidden">
+                      {userData?.photo ? (
+                        <img src={`${BACKEND_URL}/storage/${userData.photo}`} alt="Profile" className="w-full h-full object-cover" />
+                      ) : (
+                        <User size={16} />
+                      )}
                     </div>
                     <div className="hidden sm:flex flex-col">
                       <span className="text-sm font-semibold text-white leading-none max-w-[120px] truncate">{userData.name || 'Mahasiswa IT'}</span>

@@ -72,13 +72,14 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
-            'photo' => 'nullable|string'
+            'photo' => 'nullable|image|max:2048'
         ]);
 
         $user->name = $request->name;
         $user->email = $request->email;
-        if ($request->has('photo')) {
-            $user->photo = $request->photo;
+        if ($request->hasFile('photo')) {
+            $path = $request->file('photo')->store('profile-photos', 'public');
+            $user->photo = $path;
         }
         $user->save();
 

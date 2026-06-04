@@ -20,8 +20,8 @@ class HistoryController extends Controller
             'role_name' => 'required|string',
             'dynamic_score' => 'required|integer',
             'analysis_result' => 'required|array',
-            'completed_skills' => 'required|array',
-            'current_skills' => 'required|array',
+            'completed_skills' => 'present|array',
+            'current_skills' => 'present|array',
             'selected_role' => 'required|string',
         ]);
 

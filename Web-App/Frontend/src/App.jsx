@@ -50,6 +50,7 @@ export default function App() {
   const [token, setToken] = useState(localStorage.getItem('token') || null);
   const [authMode, setAuthMode] = useState('login'); 
   const [pendingSkillToComplete, setPendingSkillToComplete] = useState(null); 
+  const [pendingSaveAnalysis, setPendingSaveAnalysis] = useState(false);
 
   const [userData, setUserData] = useState({ id: null, name: '', email: '', photo: null });
   const [savedHistory, setSavedHistory] = useState([]);
@@ -222,6 +223,9 @@ export default function App() {
       executeCompleteSkill(pendingSkillToComplete);
       setPendingSkillToComplete(null);
       if (analysisResult) setActiveSavedId(analysisResult.roleId);
+    } else if (pendingSaveAnalysis) {
+      setPendingSaveAnalysis(false);
+      executeSaveAnalysis(jwtToken);
     }
   };
 
@@ -252,14 +256,8 @@ export default function App() {
     }
   }, [completedSkills, isLoggedIn, activeSavedId, analysisResult]);
 
-  // Menyimpan hasil analisis ke database Backend
-  const handleSaveAnalysis = async () => {
-    if (!isLoggedIn) {
-      setAuthMode('login');
-      setCurrentPage('auth');
-      return;
-    }
-    
+  const executeSaveAnalysis = async (tokenToUse) => {
+    const activeToken = tokenToUse || token;
     const totalReq = analysisResult.matched.length + analysisResult.missing.length;
     const totalAcq = analysisResult.matched.length + completedSkills.length;
     const currentScore = totalReq > 0 ? Math.round((totalAcq / totalReq) * 100) : 100;
@@ -277,11 +275,11 @@ export default function App() {
     try {
       const res = await fetch(`${LARAVEL_API}/histories`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${activeToken}` },
         body: JSON.stringify(payload)
       });
       if (res.ok) {
-        fetchHistories(token);
+        fetchHistories(activeToken);
         setActiveSavedId(analysisResult.roleId);
         setShowToast("Analisis berhasil disimpan!");
         setTimeout(() => setShowToast(false), 3000);
@@ -292,6 +290,17 @@ export default function App() {
       console.error(err);
       alert("Kesalahan jaringan.");
     }
+  };
+
+  // Menyimpan hasil analisis ke database Backend
+  const handleSaveAnalysis = async () => {
+    if (!isLoggedIn) {
+      setPendingSaveAnalysis(true);
+      setAuthMode('login');
+      setCurrentPage('auth');
+      return;
+    }
+    executeSaveAnalysis();
   };
 
   const loadProgress = (historyItem) => {
