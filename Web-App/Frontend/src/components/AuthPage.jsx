@@ -56,9 +56,7 @@ export default function AuthPage({ authMode, setAuthMode, handleAuthSubmit, goBa
 
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-16">
-            <div className="bg-gradient-to-br from-[#B9FF66] to-[#8bc53f] p-2.5 rounded-xl text-black shadow-[0_0_20px_rgba(185,255,102,0.4)]">
-              <BrainCircuit size={28} />
-            </div>
+            <img src="/Icon CAPAI.png" alt="Logo" className="w-8 h-8 object-contain drop-shadow-[0_0_10px_rgba(185,255,102,0.3)]" />
             <span className="font-extrabold text-2xl tracking-tight text-white">CAP<span className="text-[#B9FF66]">AI</span></span>
           </div>
 
@@ -109,9 +107,7 @@ export default function AuthPage({ authMode, setAuthMode, handleAuthSubmit, goBa
 
         {/* Mobile Logo Only */}
         <div className="absolute top-8 right-8 lg:hidden flex items-center gap-2">
-          <div className="bg-[#B9FF66] p-1.5 rounded-lg text-black">
-            <BrainCircuit size={16} />
-          </div>
+          <img src="/Icon CAPAI.png" alt="Logo" className="w-6 h-6 object-contain" />
           <span className="font-bold text-lg text-white">CAP<span className="text-[#B9FF66]">AI</span></span>
         </div>
 

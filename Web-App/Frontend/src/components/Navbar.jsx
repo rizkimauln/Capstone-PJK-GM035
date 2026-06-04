@@ -9,9 +9,7 @@ export default function Navbar({ isLoggedIn, userData, levelData, setIsLoggedIn,
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
           <div className="flex items-center gap-3">
-            <div className="bg-gradient-to-br from-[#B9FF66] to-[#8bc53f] p-2 rounded-xl text-black shadow-[0_0_15px_rgba(185,255,102,0.3)]">
-              <BrainCircuit size={24} />
-            </div>
+            <img src="/Icon CAPAI.png" alt="Logo" className="w-7 h-7 object-contain" />
             <span className="font-bold text-xl tracking-tight text-white">CAP<span className="text-[#B9FF66]">AI</span></span>
           </div>
 
