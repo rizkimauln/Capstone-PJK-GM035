@@ -357,7 +357,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#050505] text-gray-200 selection:bg-[#B9FF66] selection:text-black relative overflow-hidden">
+    <div className="min-h-[125vh] flex flex-col bg-[#050505] text-gray-200 selection:bg-[#B9FF66] selection:text-black relative overflow-hidden">
       {/* Background Glow Effects */}
       <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-[#B9FF66]/10 rounded-full blur-[120px] pointer-events-none"></div>
       <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-[#B9FF66]/5 rounded-full blur-[120px] pointer-events-none"></div>
@@ -460,7 +460,7 @@ export default function App() {
         </>
       )}
 
-      {currentPage !== 'auth' && <Footer />}
+      {currentPage === 'home' && <Footer />}
     </div>
   );
 }

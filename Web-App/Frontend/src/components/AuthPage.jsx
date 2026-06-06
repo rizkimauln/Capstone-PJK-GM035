@@ -42,7 +42,7 @@ export default function AuthPage({ authMode, setAuthMode, handleAuthSubmit, goBa
   };
 
   return (
-    <div className="min-h-screen w-full flex bg-[#050505] selection:bg-[#B9FF66] selection:text-black">
+    <div className="flex-1 w-full flex bg-[#050505] selection:bg-[#B9FF66] selection:text-black">
       
       {/* Left Panel - Visual/Brand (Hidden on Mobile) */}
       <div className="hidden lg:flex w-1/2 relative overflow-hidden flex-col justify-between p-12 border-r border-white/10">
