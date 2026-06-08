@@ -34,7 +34,10 @@ cd capstone-pjk-gm035
 1. Buka aplikasi database manager Anda (misalnya `phpMyAdmin` atau terminal MySQL).
 2. Buat sebuah database kosong baru bernama **`capairoadmap`**.
 
-### 3. Penyiapan AI-Service (Python / FastAPI)
+### 3. Pembuatan & Pembaruan Model AI (Opsional)
+Jika model *machine learning* utama belum terbuat (file `.pkl` tidak ada) atau Anda ingin memperbarui data kompetensi, silakan buka folder **`Model/`** terlebih dahulu. Di dalamnya terdapat referensi dan panduan spesifik (`Model/README.md`) untuk menjalankan skrip *notebook* guna melatih ulang model sebelum Anda menjalankan layanan AI di bawah.
+
+### 4. Penyiapan AI-Service (Python / FastAPI)
 Layanan AI ini berjalan di port **8000**.
 ```bash
 # Masuk ke direktori AI-Service
@@ -52,7 +55,7 @@ uvicorn main:app --reload
 ```
 *Biarkan terminal ini tetap terbuka.*
 
-### 4. Penyiapan Backend (Laravel 12)
+### 5. Penyiapan Backend (Laravel 12)
 Sistem *backend* ini berjalan di port **8001** agar tidak berbenturan dengan AI-Service.
 ```bash
 # Buka terminal baru dan masuk ke direktori Backend
@@ -83,7 +86,7 @@ php artisan serve --port=8001
 ```
 *Biarkan terminal ini tetap terbuka.*
 
-### 5. Penyiapan Frontend (React + Vite)
+### 6. Penyiapan Frontend (React + Vite)
 Sistem antarmuka ini berjalan di port **5173** (Bawaan Vite).
 ```bash
 # Buka terminal baru dan masuk ke direktori Frontend
