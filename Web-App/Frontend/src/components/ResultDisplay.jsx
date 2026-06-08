@@ -41,7 +41,7 @@ export default function ResultDisplay({
       </div>
 
       {completedSkills.length > 0 && dynamicScore < 100 && (
-        <div className="bg-gradient-to-r from-[#B9FF66]/20 to-transparent border border-[#B9FF66]/30 rounded-2xl p-4 mb-8 flex items-center gap-4 animate-in fade-in slide-in-from-top-4">
+        <div className="bg-gradient-to-r from-[#B9FF66]/20 to-transparent border border-[#B9FF66]/30 rounded-xl p-4 mb-8 flex items-center gap-4 animate-in fade-in slide-in-from-top-4">
           <div className="bg-[#B9FF66] p-2 rounded-full shadow-[0_0_15px_rgba(185,255,102,0.5)]">
             <Sparkles size={20} className="text-black" />
           </div>
@@ -52,15 +52,13 @@ export default function ResultDisplay({
         </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-16 items-stretch">
-        <div className="bg-[#111]/80 backdrop-blur-md border border-white/5 rounded-2xl p-8 relative overflow-hidden group flex flex-col items-center shadow-2xl h-full">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-16 items-start">
+        <div className="bg-[#111]/80 backdrop-blur-md border border-white/5 rounded-xl p-8 relative overflow-hidden group flex flex-col items-center shadow-2xl h-full">
           <div className="absolute top-0 right-0 w-48 h-48 bg-[#B9FF66] rounded-full blur-[100px] opacity-10 group-hover:opacity-20 transition-opacity duration-700"></div>
 
-          <div className="flex justify-between w-full items-center mb-8">
-            <h3 className="text-gray-400 font-semibold text-xs uppercase tracking-widest">Similarity Index</h3>
-            <div className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center gap-1.5 border ${levelData?.color || "text-gray-400 bg-gray-400/10 border-gray-400/20"}`}>
-              {levelData?.name || "Pemula"}
-            </div>
+          <div className="flex flex-col w-full mb-8 pb-4 border-b border-white/5">
+            <h3 className="text-white font-bold text-lg leading-tight mb-1">Similarity Index</h3>
+            <span className="text-[10px] text-[#B9FF66] font-bold uppercase tracking-widest">Skor Kecocokan</span>
           </div>
 
           <div className="relative w-48 h-48 flex items-center justify-center mb-8 mt-4">
@@ -89,83 +87,72 @@ export default function ResultDisplay({
             </div>
           </div>
 
-          <p className="text-sm text-gray-400 text-center max-w-[260px] mt-auto">
+          <p className="text-sm text-gray-400 text-center max-w-[260px] mt-8">
             Selesaikan modul di Peta Jalan untuk meningkatkan skor kecocokan profil Anda!
           </p>
         </div>
 
-        <div className="bg-[#111]/80 backdrop-blur-md border border-white/5 rounded-2xl p-8 flex flex-col hover:border-[#B9FF66]/20 transition-colors duration-300 relative overflow-hidden h-full">
-          <div className="absolute -bottom-10 -right-10 opacity-[0.03] select-none pointer-events-none">
-            <CheckCircle2 size={200} />
+        <div className="bg-[#111]/80 backdrop-blur-md border border-white/5 rounded-xl p-8 flex flex-col hover:border-[#B9FF66]/20 transition-colors duration-300 relative overflow-hidden h-full">
+          <div className="flex flex-col w-full mb-8 pb-4 border-b border-white/5 relative z-10">
+            <h3 className="text-white font-bold text-lg leading-tight mb-1">Kualifikasi Terpenuhi</h3>
+            <span className="text-[10px] text-[#B9FF66] font-bold uppercase tracking-widest">
+              {analysisResult.matched.length + (analysisResult.irrelevant?.length || 0) + completedSkills.length} Kompetensi
+            </span>
           </div>
 
-          <div className="flex items-center gap-4 mb-8 relative z-10">
-            <div className="bg-white/5 p-3 rounded-2xl border border-white/10 shadow-inner">
-              <CheckCircle2 size={24} className="text-[#B9FF66]" />
-            </div>
-            <div className="flex flex-col">
-              <h3 className="font-bold text-white text-lg leading-tight">Kualifikasi Terpenuhi</h3>
-              <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">
-                {analysisResult.matched.length + completedSkills.length} Kompetensi
-              </span>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap gap-3 relative z-10">
+          <div className="flex flex-col gap-3 relative z-10 w-full max-h-[320px] overflow-y-auto pr-2 custom-scrollbar">
             {analysisResult.matched.map(skill => (
-              <span key={skill} className="bg-white/5 text-gray-300 border border-white/10 px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#B9FF66] shadow-[0_0_8px_#B9FF66]"></span>
-                {skill}
-              </span>
+              <div key={skill} className="bg-[#B9FF66]/5 border border-[#B9FF66]/20 px-4 py-3 rounded-lg text-sm font-medium flex items-center gap-3">
+                <span className="w-2 h-2 rounded-full bg-[#B9FF66] shadow-[0_0_8px_#B9FF66]"></span>
+                <span className="text-gray-200">{skill}</span>
+              </div>
+            ))}
+
+            {analysisResult.irrelevant?.map(skill => (
+              <div key={skill} className="bg-yellow-500/5 border border-yellow-500/20 px-4 py-3 rounded-lg text-sm font-medium flex items-center gap-3">
+                <span className="w-2 h-2 rounded-full bg-yellow-500 shadow-[0_0_8px_#EAB308]"></span>
+                <span className="text-gray-200">{skill}</span>
+              </div>
             ))}
 
             {completedSkills.map(skill => (
-              <span key={`comp-${skill}`} className="bg-[#B9FF66]/10 text-[#B9FF66] border border-[#B9FF66]/30 px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2 animate-in fade-in zoom-in-90">
-                <Check size={14} />
-                {skill}
-              </span>
+              <div key={`comp-${skill}`} className="bg-[#B9FF66]/10 border border-[#B9FF66]/30 px-4 py-3 rounded-lg text-sm font-bold flex items-center gap-3 animate-in fade-in zoom-in-90">
+                <Check size={16} className="text-[#B9FF66]" />
+                <span className="text-[#B9FF66]">{skill}</span>
+              </div>
             ))}
 
-            {analysisResult.matched.length === 0 && completedSkills.length === 0 && (
-              <div className="flex items-center gap-3 text-gray-500 text-sm bg-white/5 px-4 py-4 rounded-xl w-full border border-dashed border-white/10">
+            {analysisResult.matched.length === 0 && (!analysisResult.irrelevant || analysisResult.irrelevant.length === 0) && completedSkills.length === 0 && (
+              <div className="flex items-center gap-3 text-gray-500 text-sm bg-white/5 px-4 py-4 rounded-lg w-full border border-dashed border-white/10">
                 <AlertCircle size={18} /> Belum ada data selaras
               </div>
             )}
           </div>
         </div>
 
-        <div className="bg-[#111]/80 backdrop-blur-md border border-white/5 rounded-2xl p-8 flex flex-col hover:border-red-500/20 transition-colors duration-300 relative overflow-hidden h-full">
-          <div className="absolute -bottom-10 -right-10 opacity-[0.03] select-none pointer-events-none">
-            <Target size={200} />
+        <div className="bg-[#111]/80 backdrop-blur-md border border-white/5 rounded-xl p-8 flex flex-col hover:border-red-500/20 transition-colors duration-300 relative overflow-hidden h-full">
+          <div className="flex flex-col w-full mb-8 pb-4 border-b border-white/5 relative z-10">
+            <h3 className="text-white font-bold text-lg leading-tight mb-1">Area Kesenjangan</h3>
+            <span className="text-[10px] text-red-400 font-bold uppercase tracking-widest">
+              {analysisResult.missing.length - completedSkills.length} Target Belajar
+            </span>
           </div>
 
-          <div className="flex items-center gap-4 mb-8 relative z-10">
-            <div className="bg-white/5 p-3 rounded-2xl border border-white/10 shadow-inner">
-              <Target size={24} className="text-red-400" />
-            </div>
-            <div className="flex flex-col">
-              <h3 className="font-bold text-white text-lg leading-tight">Area Kesenjangan</h3>
-              <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">
-                {analysisResult.missing.length - completedSkills.length} Target Belajar
-              </span>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap gap-3 relative z-10">
+          <div className="flex flex-col gap-3 relative z-10 w-full max-h-[320px] overflow-y-auto pr-2 custom-scrollbar">
             {analysisResult.missing.map(skill => {
               const isDone = completedSkills.includes(skill);
               if (isDone) return null;
 
               return (
-                <span key={skill} className="bg-red-500/5 text-red-200 border border-red-500/20 px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_8px_#F87171]"></span>
-                  {skill}
-                </span>
+                <div key={skill} className="bg-red-500/5 border border-red-500/20 px-4 py-3 rounded-lg text-sm font-medium flex items-center gap-3">
+                  <span className="w-2 h-2 rounded-full bg-red-500 shadow-[0_0_8px_#F87171]"></span>
+                  <span className="text-gray-200">{skill}</span>
+                </div>
               );
             })}
 
             {analysisResult.missing.length - completedSkills.length === 0 && (
-              <div className="flex items-center justify-center gap-2 text-[#B9FF66] bg-[#B9FF66]/10 px-4 py-4 rounded-xl w-full border border-dashed border-[#B9FF66]/20">
+              <div className="flex items-center justify-center gap-2 text-[#B9FF66] bg-[#B9FF66]/10 px-4 py-4 rounded-lg w-full border border-dashed border-[#B9FF66]/20">
                 <Trophy size={18} /> Sempurna! Semua target selesai.
               </div>
             )}
@@ -173,22 +160,19 @@ export default function ResultDisplay({
         </div>
       </div>
 
-      <div className="relative">
-        <div className="flex flex-col md:flex-row md:items-center justify-between mb-12 bg-gradient-to-r from-[#111] to-transparent border border-white/10 p-6 md:p-8 rounded-2xl backdrop-blur-sm">
-          <div className="flex items-center gap-5">
-            <div className="bg-[#B9FF66] p-4 rounded-2xl shadow-[0_0_30px_rgba(185,255,102,0.3)]">
-              <Target size={32} className="text-black" />
-            </div>
-            <div>
-              <h3 className="text-2xl md:text-3xl font-bold text-white">Visual Roadmap</h3>
-              <p className="text-gray-400 text-sm mt-1">Selesaikan modul di bawah ini untuk meningkatkan persentase <span className="text-[#B9FF66] font-semibold">Similarity Index</span> Anda.</p>
-            </div>
-          </div>
+      <div className="relative mt-12">
+        <div className="mb-16 text-center">
+          <h3 className="text-3xl md:text-4xl font-extrabold text-white mb-3">
+            Visual Roadmap
+          </h3>
+          <p className="text-gray-400 text-base w-full mx-auto">
+            Selesaikan modul di bawah ini untuk meningkatkan persentase <span className="text-[#B9FF66] font-semibold">Similarity Index</span> Anda.
+          </p>
         </div>
 
         <div className="max-w-6xl mx-auto pl-2 md:pl-0">
           {analysisResult.missing.length === 0 ? (
-            <div className="text-center py-20 px-6 bg-[#111] rounded-2xl border border-white/5">
+            <div className="text-center py-20 px-6 bg-[#111] rounded-xl border border-white/5">
               <div className="inline-flex bg-[#B9FF66]/20 p-6 rounded-full mb-6">
                 <Trophy size={56} className="text-[#B9FF66]" />
               </div>
@@ -221,7 +205,7 @@ export default function ResultDisplay({
 
                       <div className={`hidden md:block absolute top-1/2 -translate-y-1/2 w-12 border-t-2 border-dashed z-10 ${isEven ? '-right-12' : '-left-12'} ${isCompleted ? 'border-[#B9FF66]' : 'border-[#B9FF66]/30'}`}></div>
 
-                      <div className={`bg-[#111] rounded-2xl border p-6 lg:p-8 transition-all duration-300 relative overflow-hidden group/card h-full flex flex-col justify-between shadow-lg ${isCompleted ? 'border-[#B9FF66] bg-[#151a10]' : 'border-white/5 hover:border-[#B9FF66]/40 hover:bg-[#151515]'}`}>
+                      <div className={`bg-[#111] rounded-xl border p-6 lg:p-8 transition-all duration-300 relative overflow-hidden group/card h-full flex flex-col justify-between shadow-lg ${isCompleted ? 'border-[#B9FF66] bg-[#151a10]' : 'border-white/5 hover:border-[#B9FF66]/40 hover:bg-[#151515]'}`}>
                         {!isCompleted && (
                           <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#B9FF66] to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity"></div>
                         )}
@@ -245,7 +229,7 @@ export default function ResultDisplay({
                               href={url}
                               target="_blank"
                               rel="noreferrer"
-                              className={`flex-1 flex items-center justify-between gap-3 p-3.5 rounded-xl transition-all duration-300 group/btn border ${isCompleted ? 'bg-transparent border-white/10 hover:bg-white/5 opacity-70' : 'bg-white/5 hover:bg-[#B9FF66] border-white/10 hover:border-[#B9FF66]'}`}
+                              className={`flex-1 flex items-center justify-between gap-3 p-3.5 rounded-lg transition-all duration-300 group/btn border ${isCompleted ? 'bg-transparent border-white/10 hover:bg-white/5 opacity-70' : 'bg-white/5 hover:bg-[#B9FF66] border-white/10 hover:border-[#B9FF66]'}`}
                             >
                               <div className="flex items-center gap-3">
                                 <div className={`p-2 rounded-full transition-colors shrink-0 ${isCompleted ? 'bg-white/10 text-white' : 'bg-white/10 group-hover/btn:bg-black/10 text-white group-hover/btn:text-black'}`}>
@@ -259,7 +243,7 @@ export default function ResultDisplay({
 
                             <button
                               onClick={() => toggleCompleteSkill(skill)}
-                              className={`flex items-center justify-center gap-2 p-3.5 rounded-xl transition-all font-bold text-xs uppercase tracking-wide border ${isCompleted
+                              className={`flex items-center justify-center gap-2 p-3.5 rounded-lg transition-all font-bold text-xs uppercase tracking-wide border ${isCompleted
                                 ? 'bg-transparent border-red-500/30 text-red-400 hover:bg-red-500/10 hover:border-red-500'
                                 : 'bg-[#B9FF66]/10 border-[#B9FF66]/30 text-[#B9FF66] hover:bg-[#B9FF66] hover:text-black hover:shadow-[0_0_15px_rgba(185,255,102,0.4)]'
                                 }`}
@@ -280,7 +264,7 @@ export default function ResultDisplay({
                   <Trophy size={16} className={dynamicScore >= 100 ? "text-black" : "text-gray-500"} />
                 </div>
 
-                <div className={`w-[calc(100%-4rem)] ml-[4rem] md:ml-0 md:w-1/2 lg:w-5/12 border rounded-2xl p-6 flex items-center justify-center gap-4 relative mt-1 md:mt-12 text-center md:text-left transition-all duration-500 ${dynamicScore >= 100 ? 'bg-[#B9FF66]/10 border-[#B9FF66]/40 opacity-100' : 'bg-white/5 border-white/5 opacity-60'}`}>
+                <div className={`w-[calc(100%-4rem)] ml-[4rem] md:ml-0 md:w-1/2 lg:w-5/12 border rounded-xl p-6 flex items-center justify-center gap-4 relative mt-1 md:mt-12 text-center md:text-left transition-all duration-500 ${dynamicScore >= 100 ? 'bg-[#B9FF66]/10 border-[#B9FF66]/40 opacity-100' : 'bg-white/5 border-white/5 opacity-60'}`}>
                   <div className={`p-4 rounded-full hidden md:block transition-colors ${dynamicScore >= 100 ? 'bg-[#B9FF66] shadow-lg' : 'bg-white/10'}`}>
                     <Target size={28} className={dynamicScore >= 100 ? "text-black" : "text-white"} />
                   </div>

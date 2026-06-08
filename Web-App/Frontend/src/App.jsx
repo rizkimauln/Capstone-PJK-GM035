@@ -13,10 +13,7 @@ const API_BASE = import.meta.env.VITE_API_BASE_URL;
 const LARAVEL_API = import.meta.env.VITE_LARAVEL_API_URL || "http://127.0.0.1:8001/api";
 
 const getLevelBadge = (score) => {
-  if (score >= 100) return { name: "Siap Industri", color: "text-yellow-400 bg-yellow-400/10 border-yellow-400/20" };
-  if (score >= 70) return { name: "Profesional", color: "text-purple-400 bg-purple-400/10 border-purple-400/20" };
-  if (score >= 40) return { name: "Penjelajah", color: "text-blue-400 bg-blue-400/10 border-blue-400/20" };
-  return { name: "Pemula", color: "text-gray-400 bg-gray-400/10 border-gray-400/20" };
+  return null; // Level dihapus sesuai permintaan
 };
 
 const mapHistory = (h) => ({
@@ -29,6 +26,16 @@ const mapHistory = (h) => ({
   currentSkills: h.current_skills,
   selectedRole: h.selected_role
 });
+
+const calculateDynamicScore = (analysisResult, completedSkillsCount) => {
+  if (!analysisResult) return 0;
+  const baseScoreStr = analysisResult.score;
+  const baseScore = parseFloat(baseScoreStr) || 0;
+  if (analysisResult.missing.length === 0) return 100;
+  const progressPerSkill = (100 - baseScore) / analysisResult.missing.length;
+  let score = Math.round(baseScore + (completedSkillsCount * progressPerSkill));
+  return score > 100 ? 100 : score;
+};
 
 export default function App() {
   const [rolesData, setRolesData] = useState([]);
@@ -153,17 +160,33 @@ export default function App() {
       const data = await res.json();
       if (data.detail) throw new Error(data.detail);
 
+      // Fetch full requirements by sending empty skills
+      const resFull = await fetch(`${API_BASE}/recommend`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          target_role: selectedRole,
+          current_skills: []
+        })
+      });
+      const dataFull = await resFull.json();
+      const targetSkillsNames = dataFull.missing_skills.map(m => m.skill.charAt(0).toUpperCase() + m.skill.slice(1));
+
       const missingSkillNames = data.missing_skills.map(m => m.skill.charAt(0).toUpperCase() + m.skill.slice(1));
       const linksMap = data.missing_skills.reduce((acc, curr) => {
         acc[curr.skill.charAt(0).toUpperCase() + curr.skill.slice(1)] = curr.link;
         return acc;
       }, {});
 
+      const matchedRelevant = currentSkills.filter(s => targetSkillsNames.includes(s));
+      const matchedIrrelevant = currentSkills.filter(s => !targetSkillsNames.includes(s));
+
       setAnalysisResult({
         roleId: selectedRole.toLowerCase().replace(/\s/g, '_'),
         roleName: data.target_role,
         score: data.similarity_score,
-        matched: currentSkills.filter(s => !missingSkillNames.includes(s)), 
+        matched: matchedRelevant, 
+        irrelevant: matchedIrrelevant,
         missing: missingSkillNames,
         links: linksMap
       });
@@ -206,9 +229,7 @@ export default function App() {
   let levelData = getLevelBadge(0);
   
   if (analysisResult) {
-    const totalRequirements = analysisResult.matched.length + analysisResult.missing.length;
-    const totalAcquired = analysisResult.matched.length + completedSkills.length;
-    dynamicScore = totalRequirements > 0 ? Math.round((totalAcquired / totalRequirements) * 100) : 100;
+    dynamicScore = calculateDynamicScore(analysisResult, completedSkills.length);
     levelData = getLevelBadge(dynamicScore);
   }
 
@@ -232,9 +253,7 @@ export default function App() {
   // Sync to backend automatically when completed skills change and it's already saved
   useEffect(() => {
     if (isLoggedIn && analysisResult && activeSavedId === analysisResult.roleId) {
-      const totalReq = analysisResult.matched.length + analysisResult.missing.length;
-      const totalAcq = analysisResult.matched.length + completedSkills.length;
-      const currentScore = totalReq > 0 ? Math.round((totalAcq / totalReq) * 100) : 100;
+      const currentScore = calculateDynamicScore(analysisResult, completedSkills.length);
 
       const payload = {
         role_id: analysisResult.roleId,
@@ -258,9 +277,7 @@ export default function App() {
 
   const executeSaveAnalysis = async (tokenToUse) => {
     const activeToken = tokenToUse || token;
-    const totalReq = analysisResult.matched.length + analysisResult.missing.length;
-    const totalAcq = analysisResult.matched.length + completedSkills.length;
-    const currentScore = totalReq > 0 ? Math.round((totalAcq / totalReq) * 100) : 100;
+    const currentScore = calculateDynamicScore(analysisResult, completedSkills.length);
 
     const payload = {
       role_id: analysisResult.roleId,

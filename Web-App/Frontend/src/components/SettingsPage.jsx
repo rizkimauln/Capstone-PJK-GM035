@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { User, Mail, Lock, Trash2, Camera, ArrowLeft, Shield, Save, AlertTriangle } from 'lucide-react';
+import { User, Mail, Lock, Trash2, Pencil, ArrowLeft, Shield, Save, AlertTriangle } from 'lucide-react';
 
 export default function SettingsPage({ userData, setUserData, token, handleDeleteAccount, goBack, setShowToast }) {
   const LARAVEL_API = import.meta.env.VITE_LARAVEL_API_URL || "http://127.0.0.1:8001/api";
@@ -83,7 +83,7 @@ export default function SettingsPage({ userData, setUserData, token, handleDelet
       <div className="mb-10 flex items-center gap-4">
         <button 
           onClick={goBack}
-          className="bg-white/5 hover:bg-white/10 p-3 rounded-xl border border-white/10 transition-colors text-white"
+          className="bg-white/5 hover:bg-white/10 p-3 rounded-lg border border-white/10 transition-colors text-white"
         >
           <ArrowLeft size={20} />
         </button>
@@ -98,7 +98,7 @@ export default function SettingsPage({ userData, setUserData, token, handleDelet
         <div className="w-full lg:w-72 shrink-0 space-y-2">
           <button 
             onClick={() => setActiveTab('profile')}
-            className={`w-full flex items-center gap-3 px-5 py-4 rounded-2xl text-sm font-semibold transition-all ${
+            className={`w-full flex items-center gap-3 px-5 py-4 rounded-lg text-sm font-semibold transition-all ${
               activeTab === 'profile' 
                 ? 'bg-[#B9FF66] text-black shadow-[0_0_20px_rgba(185,255,102,0.2)]' 
                 : 'text-gray-400 hover:bg-white/5 hover:text-white'
@@ -109,7 +109,7 @@ export default function SettingsPage({ userData, setUserData, token, handleDelet
           
           <button 
             onClick={() => setActiveTab('security')}
-            className={`w-full flex items-center gap-3 px-5 py-4 rounded-2xl text-sm font-semibold transition-all ${
+            className={`w-full flex items-center gap-3 px-5 py-4 rounded-lg text-sm font-semibold transition-all ${
               activeTab === 'security' 
                 ? 'bg-[#B9FF66] text-black shadow-[0_0_20px_rgba(185,255,102,0.2)]' 
                 : 'text-gray-400 hover:bg-white/5 hover:text-white'
@@ -121,7 +121,7 @@ export default function SettingsPage({ userData, setUserData, token, handleDelet
           <div className="pt-4 mt-4 border-t border-white/10">
             <button 
               onClick={() => setActiveTab('danger')}
-              className={`w-full flex items-center gap-3 px-5 py-4 rounded-xl text-sm font-semibold transition-all ${
+              className={`w-full flex items-center gap-3 px-5 py-4 rounded-lg text-sm font-semibold transition-all ${
                 activeTab === 'danger' 
                   ? 'bg-red-500 text-white shadow-[0_0_20px_rgba(239,68,68,0.2)]' 
                   : 'text-red-400 hover:bg-red-500/10'
@@ -133,7 +133,7 @@ export default function SettingsPage({ userData, setUserData, token, handleDelet
         </div>
 
         {/* Content Area */}
-        <div className="flex-1 w-full bg-[#111]/80 backdrop-blur-xl border border-white/10 rounded-2xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+        <div className="flex-1 w-full bg-[#111]/80 backdrop-blur-xl border border-white/10 rounded-xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
           {/* Subtle Glow inside card */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-[100px] pointer-events-none"></div>
 
@@ -141,7 +141,7 @@ export default function SettingsPage({ userData, setUserData, token, handleDelet
             <div className="animate-in fade-in duration-300">
               <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
                 <h2 className="text-2xl font-bold text-white">Informasi Profil</h2>
-                <button type="submit" form="profileForm" className="hidden md:flex bg-[#B9FF66] text-black px-6 py-2.5 rounded-xl text-sm font-bold hover:bg-[#a3e655] transition-all items-center justify-center gap-2 shadow-[0_0_20px_rgba(185,255,102,0.15)] hover:shadow-[0_0_30px_rgba(185,255,102,0.3)]">
+                <button type="submit" form="profileForm" className="hidden md:flex bg-[#B9FF66] text-black px-6 py-2.5 rounded-lg text-sm font-bold hover:bg-[#a3e655] transition-all items-center justify-center gap-2 shadow-[0_0_20px_rgba(185,255,102,0.15)] hover:shadow-[0_0_30px_rgba(185,255,102,0.3)]">
                   <Save size={16} /> Simpan Profil
                 </button>
               </div>
@@ -156,8 +156,8 @@ export default function SettingsPage({ userData, setUserData, token, handleDelet
                       ) : (
                         <User size={40} className="text-gray-500" />
                       )}
-                      <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer" onClick={() => fileInputRef.current?.click()}>
-                        <Camera size={24} className="text-white" />
+                      <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer backdrop-blur-sm rounded-full" onClick={() => fileInputRef.current?.click()}>
+                        <Pencil size={24} className="text-white drop-shadow-md" />
                       </div>
                     </div>
                     <input 
@@ -168,12 +168,9 @@ export default function SettingsPage({ userData, setUserData, token, handleDelet
                       className="hidden" 
                     />
                   </div>
-                  <div>
-                    <h3 className="text-white font-medium mb-1">Foto Profil</h3>
-                    <p className="text-sm text-gray-500 mb-3">Format disarankan: JPG, PNG. Maks ukuran 2MB.</p>
-                    <button type="button" onClick={() => fileInputRef.current?.click()} className="text-xs bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-full font-semibold transition-colors">
-                      Ubah Foto
-                    </button>
+                  <div className="flex flex-col justify-center">
+                    <h3 className="text-white font-bold text-lg mb-1">Foto Profil</h3>
+                    <p className="text-sm text-gray-400">Format disarankan: JPG, PNG. Maks ukuran 2MB.</p>
                   </div>
                 </div>
 
@@ -189,7 +186,7 @@ export default function SettingsPage({ userData, setUserData, token, handleDelet
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required 
-                        className="w-full bg-[#1A1A1A] border border-white/10 rounded-xl pl-11 pr-4 py-3.5 text-white text-sm focus:outline-none focus:border-[#B9FF66]/50 focus:ring-1 focus:ring-[#B9FF66]/50 transition-all placeholder:text-gray-600" 
+                        className="w-full bg-[#1A1A1A] border border-white/10 rounded-lg pl-11 pr-4 py-3.5 text-white text-sm focus:outline-none focus:border-[#B9FF66]/50 focus:ring-1 focus:ring-[#B9FF66]/50 transition-all placeholder:text-gray-600" 
                       />
                     </div>
                   </div>
@@ -204,14 +201,14 @@ export default function SettingsPage({ userData, setUserData, token, handleDelet
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required 
-                        className="w-full bg-[#1A1A1A] border border-white/10 rounded-xl pl-11 pr-4 py-3.5 text-white text-sm focus:outline-none focus:border-[#B9FF66]/50 focus:ring-1 focus:ring-[#B9FF66]/50 transition-all placeholder:text-gray-600" 
+                        className="w-full bg-[#1A1A1A] border border-white/10 rounded-lg pl-11 pr-4 py-3.5 text-white text-sm focus:outline-none focus:border-[#B9FF66]/50 focus:ring-1 focus:ring-[#B9FF66]/50 transition-all placeholder:text-gray-600" 
                       />
                     </div>
                   </div>
                 </div>
 
                 <div className="pt-2 md:hidden">
-                  <button type="submit" className="w-full bg-[#B9FF66] text-black px-6 py-3.5 rounded-xl text-sm font-bold hover:bg-[#a3e655] transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(185,255,102,0.15)] hover:shadow-[0_0_30px_rgba(185,255,102,0.3)]">
+                  <button type="submit" className="w-full bg-[#B9FF66] text-black px-6 py-3.5 rounded-lg text-sm font-bold hover:bg-[#a3e655] transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(185,255,102,0.15)] hover:shadow-[0_0_30px_rgba(185,255,102,0.3)]">
                     <Save size={16} /> Simpan Profil
                   </button>
                 </div>
@@ -223,7 +220,7 @@ export default function SettingsPage({ userData, setUserData, token, handleDelet
             <div className="animate-in fade-in duration-300">
               <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
                 <h2 className="text-2xl font-bold text-white">Ubah Kata Sandi</h2>
-                <button type="submit" form="passwordForm" className="hidden md:flex bg-[#B9FF66] text-black px-6 py-2.5 rounded-xl text-sm font-bold hover:bg-[#a3e655] transition-all items-center justify-center gap-2 shadow-[0_0_20px_rgba(185,255,102,0.15)] hover:shadow-[0_0_30px_rgba(185,255,102,0.3)]">
+                <button type="submit" form="passwordForm" className="hidden md:flex bg-[#B9FF66] text-black px-6 py-2.5 rounded-lg text-sm font-bold hover:bg-[#a3e655] transition-all items-center justify-center gap-2 shadow-[0_0_20px_rgba(185,255,102,0.15)] hover:shadow-[0_0_30px_rgba(185,255,102,0.3)]">
                   <Save size={16} /> Perbarui Sandi
                 </button>
               </div>
@@ -266,7 +263,7 @@ export default function SettingsPage({ userData, setUserData, token, handleDelet
                 </div>
 
                 <div className="pt-2 md:hidden">
-                  <button type="submit" className="w-full bg-[#B9FF66] text-black px-6 py-3.5 rounded-xl text-sm font-bold hover:bg-[#a3e655] transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(185,255,102,0.15)] hover:shadow-[0_0_30px_rgba(185,255,102,0.3)]">
+                  <button type="submit" className="w-full bg-[#B9FF66] text-black px-6 py-3.5 rounded-lg text-sm font-bold hover:bg-[#a3e655] transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(185,255,102,0.15)] hover:shadow-[0_0_30px_rgba(185,255,102,0.3)]">
                     <Save size={16} /> Perbarui Sandi
                   </button>
                 </div>
@@ -295,7 +292,7 @@ export default function SettingsPage({ userData, setUserData, token, handleDelet
                   {!confirmDelete ? (
                     <button 
                       onClick={() => setConfirmDelete(true)} 
-                      className="w-full md:w-auto bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white px-8 py-4 rounded-xl text-sm font-bold flex items-center justify-center gap-3 transition-all border border-red-500/20 hover:border-red-500 shadow-[0_0_20px_rgba(239,68,68,0.1)] hover:shadow-[0_0_30px_rgba(239,68,68,0.3)]"
+                      className="w-full md:w-auto bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white px-8 py-4 rounded-lg text-sm font-bold flex items-center justify-center gap-3 transition-all border border-red-500/20 hover:border-red-500 shadow-[0_0_20px_rgba(239,68,68,0.1)] hover:shadow-[0_0_30px_rgba(239,68,68,0.3)]"
                     >
                       <Trash2 size={20}/> Hapus Akun Saya
                     </button>
@@ -310,20 +307,20 @@ export default function SettingsPage({ userData, setUserData, token, handleDelet
                            placeholder="Kata sandi konfirmasi..." 
                            value={deletePassword} 
                            onChange={(e) => setDeletePassword(e.target.value)} 
-                           className="w-full bg-[#0A0A0A] border border-red-500/30 rounded-xl pl-11 pr-4 py-3.5 text-white text-sm focus:outline-none focus:border-red-500 transition-all placeholder:text-red-500/30" 
+                           className="w-full bg-[#0A0A0A] border border-red-500/30 rounded-lg pl-11 pr-4 py-3.5 text-white text-sm focus:outline-none focus:border-red-500 transition-all placeholder:text-red-500/30" 
                          />
                       </div>
                       <div className="flex gap-2">
                         <button 
                           onClick={() => { setConfirmDelete(false); setDeletePassword(''); }} 
-                          className="flex-1 bg-white/5 text-white px-4 py-3 rounded-xl text-sm font-bold hover:bg-white/10 transition-colors border border-white/10"
+                          className="flex-1 bg-white/5 text-white px-4 py-3 rounded-lg text-sm font-bold hover:bg-white/10 transition-colors border border-white/10"
                         >
                           Batal
                         </button>
                         <button 
                           onClick={() => handleDeleteAccount(deletePassword)} 
                           disabled={!deletePassword} 
-                          className="flex-1 bg-red-500 text-white px-4 py-3 rounded-xl text-sm font-bold hover:bg-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="flex-1 bg-red-500 text-white px-4 py-3 rounded-lg text-sm font-bold hover:bg-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           Konfirmasi
                         </button>
